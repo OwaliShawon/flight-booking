@@ -8,6 +8,7 @@ import { AppService } from './app.service';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { UserModule } from './user/user.module';
+import { FlightModule } from './flight/flight.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { UserModule } from './user/user.module';
     }),
     AuthModule,
     UserModule,
+    FlightModule,
   ],
   controllers: [AppController],
   providers: [AppService],
