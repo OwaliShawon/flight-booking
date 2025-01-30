@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Booking } from '../booking/booking.entity';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  JoinColumn,
+} from 'typeorm';
 
 @Entity()
 export class User {
@@ -25,4 +32,8 @@ export class User {
 
   @Column({ nullable: true })
   facebookId: string;
+
+  @OneToMany(() => Booking, (booking) => booking.user)
+  @JoinColumn({ name: 'userId' })
+  bookings: Booking[];
 }
