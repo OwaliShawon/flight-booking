@@ -12,6 +12,15 @@ export class User {
   password: string;
 
   @Column({ nullable: true })
+  firstName: string;
+
+  @Column({ nullable: true })
+  lastName: string;
+
+  @Column({ nullable: true })
+  profilePicture: string;
+
+  @Column({ nullable: true })
   googleId: string;
 
   @Column({ nullable: true })
