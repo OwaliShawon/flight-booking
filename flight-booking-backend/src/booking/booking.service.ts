@@ -5,6 +5,7 @@ import { Booking } from './booking.entity';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { User } from '../user/user.entity';
 import { Flight } from '../flight/flight.entity';
+import * as nodemailer from 'nodemailer';
 
 @Injectable()
 export class BookingService {
@@ -40,7 +41,7 @@ export class BookingService {
     });
 
     await this.bookingRepository.save(booking);
-    // Add email confirmation logic here
+    await this.sendBookingConfirmation(user.email, booking);
 
     return booking;
   }
@@ -50,5 +51,26 @@ export class BookingService {
       where: { user: { id: userId } },
       relations: ['flight'],
     });
+  }
+
+  async sendBookingConfirmation(email: string, booking: Booking) {
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.example.com',
+      port: 587,
+      secure: false,
+      auth: {
+        user: 'your_email@example.com',
+        pass: 'your_email_password',
+      },
+    });
+
+    const mailOptions = {
+      from: 'your_email@example.com',
+      to: email,
+      subject: 'Booking Confirmation',
+      text: `Your booking is confirmed. Booking details: ${JSON.stringify(booking)}`,
+    };
+
+    await transporter.sendMail(mailOptions);
   }
 }
