@@ -12,6 +12,7 @@ import { FlightModule } from './flight/flight.module';
 import { BookingModule } from './booking/booking.module';
 import { Flight } from './flight/flight.entity';
 import { Booking } from './booking/booking.entity';
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { Booking } from './booking/booking.entity';
     UserModule,
     FlightModule,
     BookingModule,
+    PaymentModule,
   ],
   controllers: [AppController],
   providers: [AppService],
