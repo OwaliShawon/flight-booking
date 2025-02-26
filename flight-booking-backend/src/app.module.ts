@@ -14,6 +14,7 @@ import { Flight } from './flight/flight.entity';
 import { Booking } from './booking/booking.entity';
 import { PaymentModule } from './payment/payment.module';
 import { NotificationModule } from './notification/notification.module';
+import { Payment } from './payment/payment.entity';
 
 @Module({
   imports: [
@@ -25,7 +26,7 @@ import { NotificationModule } from './notification/notification.module';
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      entities: [User, Flight, Booking],
+      entities: [User, Flight, Booking, Payment],
       synchronize: true,
     }),
     ServeStaticModule.forRoot({
