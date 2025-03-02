@@ -12,6 +12,10 @@ export class UserService {
     private userRepository: Repository<User>,
   ) {}
 
+  async getUsers(): Promise<User[]> {
+    return this.userRepository.find();
+  }
+
   async updateUser(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     const user = await this.userRepository.preload({
       id,
