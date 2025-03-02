@@ -44,15 +44,9 @@ export class BookingService {
     await this.bookingRepository.save(booking);
 
     // Send notifications
-    await this.notificationService.sendBookingConfirmationEmail(
-      user.email,
-      booking,
-    );
+    this.notificationService.sendBookingConfirmationEmail(user.email, booking);
     if (user.phone) {
-      await this.notificationService.sendBookingConfirmationSms(
-        user.phone,
-        booking,
-      );
+      this.notificationService.sendBookingConfirmationSms(user.phone, booking);
     }
 
     return booking;
