@@ -45,6 +45,7 @@ import { AdminModule } from './admin/admin.module';
     ReviewModule,
     RatingModule,
     AdminModule,
+    TypeOrmModule.forFeature([User, Flight, Booking]),
   ],
   controllers: [AppController],
   providers: [AppService],
