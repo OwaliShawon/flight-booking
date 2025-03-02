@@ -15,7 +15,7 @@ export class User {
   @Column({ unique: true })
   email: string;
 
-  @Column({ unique: false , nullable: true })
+  @Column({ unique: false, nullable: true })
   phone: string;
 
   @Column()
@@ -39,4 +39,7 @@ export class User {
   @OneToMany(() => Booking, (booking) => booking.user)
   @JoinColumn({ name: 'userId' })
   bookings: Booking[];
+
+  @Column({ default: 'user' })
+  role: string;
 }
