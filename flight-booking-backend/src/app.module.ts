@@ -15,6 +15,7 @@ import { Booking } from './booking/booking.entity';
 import { PaymentModule } from './payment/payment.module';
 import { NotificationModule } from './notification/notification.module';
 import { Payment } from './payment/payment.entity';
+import { ReviewModule } from './review/review.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { Payment } from './payment/payment.entity';
     BookingModule,
     PaymentModule,
     NotificationModule,
+    ReviewModule,
   ],
   controllers: [AppController],
   providers: [AppService],
