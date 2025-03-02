@@ -1,8 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Flight } from './flight.entity';
 import { SearchFlightDto } from './dto/search-flight.dto';
+import { CreateFlightDto } from './dto/create-flight.dto';
+import { UpdateFlightDto } from './dto/update-flight.dto';
 
 @Injectable()
 export class FlightService {
@@ -30,5 +32,37 @@ export class FlightService {
 
   async getFlightById(id: number): Promise<Flight> {
     return this.flightRepository.findOne({ where: { id } });
+  }
+
+  async createFlight(createFlightDto: CreateFlightDto): Promise<Flight> {
+    const flight = this.flightRepository.create(createFlightDto);
+    return this.flightRepository.save(flight);
+  }
+
+  async updateFlight(
+    id: number,
+    updateFlightDto: UpdateFlightDto,
+  ): Promise<Flight> {
+    const flight = await this.flightRepository.preload({
+      id,
+      ...updateFlightDto,
+    });
+
+    if (!flight) {
+      throw new NotFoundException(`Flight with ID ${id} not found`);
+    }
+
+    return this.flightRepository.save(flight);
+  }
+
+  async deleteFlight(id: number): Promise<void> {
+    const result = await this.flightRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`Flight with ID ${id} not found`);
+    }
+  }
+
+  async getFlights(): Promise<Flight[]> {
+    return this.flightRepository.find();
   }
 }
