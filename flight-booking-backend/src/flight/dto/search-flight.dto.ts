@@ -1,6 +1,6 @@
 export class SearchFlightDto {
   from: string;
   to: string;
-  departureDate: Date;
-  returnDate?: Date;
+  departureTime: Date;
+  arrivalTime?: Date;
 }

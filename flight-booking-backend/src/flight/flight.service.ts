@@ -34,17 +34,20 @@ export class FlightService {
   }
 
   async searchFlights(searchFlightDto: SearchFlightDto): Promise<Flight[]> {
-    const { from, to, departureDate, returnDate } = searchFlightDto;
+    console.log(searchFlightDto);
+    const { from, to, departureTime, arrivalTime } = searchFlightDto;
     const query = this.flightRepository
       .createQueryBuilder('flight')
       .where('flight.from = :from', { from })
       .andWhere('flight.to = :to', { to })
-      .andWhere('DATE(flight.departureTime) = :departureDate', {
-        departureDate,
+      .andWhere('DATE(flight.departureTime) = :departureTime', {
+        departureTime,
       });
 
-    if (returnDate) {
-      query.andWhere('DATE(flight.arrivalTime) = :returnDate', { returnDate });
+    if (arrivalTime) {
+      query.andWhere('DATE(flight.arrivalTime) = :arrivalTime', {
+        arrivalTime,
+      });
     }
 
     return query.getMany();

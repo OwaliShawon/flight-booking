@@ -22,6 +22,11 @@ export class FlightController {
     return this.flightService.findAll();
   }
 
+  @Get('search')
+  searchFlights(@Query() searchFlightDto: SearchFlightDto) {
+    return this.flightService.searchFlights(searchFlightDto);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: number): Promise<Flight> {
     return this.flightService.findOne(id);
@@ -40,11 +45,6 @@ export class FlightController {
   @Delete(':id')
   delete(@Param('id') id: number): Promise<any> {
     return this.flightService.delete(id);
-  }
-
-  @Get()
-  searchFlights(@Query() searchFlightDto: SearchFlightDto) {
-    return this.flightService.searchFlights(searchFlightDto);
   }
 
   @Get(':id')
