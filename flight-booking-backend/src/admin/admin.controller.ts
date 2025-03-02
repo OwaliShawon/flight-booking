@@ -34,12 +34,12 @@ export class AdminController {
 
   @Get('flights')
   async getFlights() {
-    return this.flightService.getFlights();
+    return this.flightService.findAll();
   }
 
   @Post('flights')
   async createFlight(@Body() createFlightDto: CreateFlightDto) {
-    return this.flightService.createFlight(createFlightDto);
+    return this.flightService.create(createFlightDto);
   }
 
   @Put('flights/:id')
@@ -47,12 +47,12 @@ export class AdminController {
     @Param('id') id: number,
     @Body() updateFlightDto: UpdateFlightDto,
   ) {
-    return this.flightService.updateFlight(id, updateFlightDto);
+    return this.flightService.update(id, updateFlightDto);
   }
 
   @Delete('flights/:id')
   async deleteFlight(@Param('id') id: number) {
-    return this.flightService.deleteFlight(id);
+    return this.flightService.delete(id);
   }
 
   @Get('users')

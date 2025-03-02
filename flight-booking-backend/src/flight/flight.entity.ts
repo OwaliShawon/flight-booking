@@ -9,20 +9,20 @@ export class Flight {
   airline: string;
 
   @Column()
+  departureTime: Date;
+
+  @Column()
+  arrivalTime: Date;
+
+  @Column()
   from: string;
 
   @Column()
   to: string;
 
   @Column()
-  departureTime: Date;
-
-  @Column()
-  arrivalTime: Date;
-
-  @Column('decimal')
   price: number;
 
   @Column()
-  duration: string;
+  seatsAvailable: number;
 }

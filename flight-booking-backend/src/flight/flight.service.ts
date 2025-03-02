@@ -13,6 +13,26 @@ export class FlightService {
     private flightRepository: Repository<Flight>,
   ) {}
 
+  findAll(): Promise<Flight[]> {
+    return this.flightRepository.find();
+  }
+
+  findOne(id: number): Promise<Flight> {
+    return this.flightRepository.findOne({ where: { id } });
+  }
+
+  create(flight: CreateFlightDto): Promise<Flight> {
+    return this.flightRepository.save(flight);
+  }
+
+  update(id: number, flight: UpdateFlightDto): Promise<any> {
+    return this.flightRepository.update(id, flight);
+  }
+
+  delete(id: number): Promise<any> {
+    return this.flightRepository.delete(id);
+  }
+
   async searchFlights(searchFlightDto: SearchFlightDto): Promise<Flight[]> {
     const { from, to, departureDate, returnDate } = searchFlightDto;
     const query = this.flightRepository
@@ -32,37 +52,5 @@ export class FlightService {
 
   async getFlightById(id: number): Promise<Flight> {
     return this.flightRepository.findOne({ where: { id } });
-  }
-
-  async createFlight(createFlightDto: CreateFlightDto): Promise<Flight> {
-    const flight = this.flightRepository.create(createFlightDto);
-    return this.flightRepository.save(flight);
-  }
-
-  async updateFlight(
-    id: number,
-    updateFlightDto: UpdateFlightDto,
-  ): Promise<Flight> {
-    const flight = await this.flightRepository.preload({
-      id,
-      ...updateFlightDto,
-    });
-
-    if (!flight) {
-      throw new NotFoundException(`Flight with ID ${id} not found`);
-    }
-
-    return this.flightRepository.save(flight);
-  }
-
-  async deleteFlight(id: number): Promise<void> {
-    const result = await this.flightRepository.delete(id);
-    if (result.affected === 0) {
-      throw new NotFoundException(`Flight with ID ${id} not found`);
-    }
-  }
-
-  async getFlights(): Promise<Flight[]> {
-    return this.flightRepository.find();
   }
 }
