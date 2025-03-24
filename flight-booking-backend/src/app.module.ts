@@ -18,20 +18,17 @@ import { Payment } from './payment/payment.entity';
 import { ReviewModule } from './review/review.module';
 import { RatingModule } from './rating/rating.module';
 import { AdminModule } from './admin/admin.module';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.DATABASE_HOST,
-      port: parseInt(process.env.DATABASE_PORT, 10),
-      username: process.env.DATABASE_USERNAME,
-      password: process.env.DATABASE_PASSWORD,
-      database: process.env.DATABASE_NAME,
-      entities: [User, Flight, Booking, Payment],
-      synchronize: true,
+    ConfigModule.forRoot({
+      envFilePath: process.env.NODE_ENV
+        ? `.env.${process.env.NODE_ENV || 'development'}`
+        : '.env',
+      isGlobal: true,
     }),
+    DatabaseModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'uploads'),
       serveRoot: '/uploads',
